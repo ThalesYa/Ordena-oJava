@@ -1,7 +1,6 @@
 import org.junit.Test;
 
 public class TesteDeTempo {
-
     @Test
     public void testeBubbleSortPerformance()
     {
@@ -137,8 +136,7 @@ public class TesteDeTempo {
         }
     }
     @Test
-    public void testeShellSortPerformance()
-    {
+    public void testeShellSortPerformance() {
         int[] tamanhos = {50, 500, 1000, 5000, 10000}; // Tamanhos pra testar
 
         for (int tamanho : tamanhos) {
@@ -180,5 +178,49 @@ public class TesteDeTempo {
             System.out.println("=============================");
         }
     }
+    @Test
+    public void testeQuickSortPerformance() {
+        int[] tamanhos = {50, 500, 1000, 5000, 10000}; // Tamanhos pra testar
+
+        for (int tamanho : tamanhos) {
+            long tempoTotalExecucao = 0;
+            long totalTrocas = 0;
+            long totalIteracoes = 0;
+
+            System.out.println("=============================");
+            System.out.println("QUICKSORT");
+            System.out.println("Tamanho do Vetor: " + tamanho);
+            System.out.println("Tempos de Execução Individual:");
+
+            for (int i = 0; i < 5; i++) { // Execute o teste 5 vezes para cada tamanho
+                QuickSort testeQuickSort = new QuickSort(tamanho);
+                testeQuickSort.PreencherVetorAleatoriamente();
+
+                long startTime = System.nanoTime(); // Marca o início da execução
+                testeQuickSort.quicksort(testeQuickSort.getVetor(), 0, testeQuickSort.getVetor().length - 1);
+                long endTime = System.nanoTime(); // Marca o fim da execução
+
+                long executionTime = endTime - startTime; // Calcula o tempo de execução em nanossegundos
+                System.out.println("Execução " + (i + 1) + ": " + executionTime + " ns");
+
+                long iteracoes = testeQuickSort.getIteracoes();
+                long trocas = testeQuickSort.getTrocas();
+
+                totalIteracoes += iteracoes;
+                totalTrocas += trocas;
+                tempoTotalExecucao += executionTime;
+            }
+
+            long tempoMedioExecucao = tempoTotalExecucao / 5; // Calcula o tempo médio de execução
+            long mediaIteracoes = totalIteracoes / 5; // Calcula a média das iterações
+            long mediaTrocas = totalTrocas / 5; // Calcula a média das trocas
+
+            System.out.println("Média por Execução: " + tempoMedioExecucao + " ns");
+            System.out.println("Média das iterações: " + mediaIteracoes);
+            System.out.println("Média das trocas: " + mediaTrocas);
+            System.out.println("=============================");
+        }
+    }
+
 
 }
